@@ -2,50 +2,51 @@ import java.io.*;
 import java.util.*;
 
 class Solution {
-    //1. 좌표평면을 벗어나면 false를 리턴하는 함수 
+    //1. 좌표범위  TF 판단
     private static boolean isValid(int nx,int ny){
-        return 0 <= nx && 0 <= ny && 11 > nx && 11 > ny;
+        return nx>=0 && ny>=0 && nx <11 && ny <11;
     }
     
-    //2. U,D,R,L의 디렉션을 가지고 있는 해시맵 선언 및 초기화
-    private static final HashMap<Character, int[]> map = new HashMap<>();
-    
-    public static void initMap(){
-        map.put('U',new int[] {0,1});
-        map.put('D',new int[] {0,-1});
-        map.put('R',new int[] {1,0});
-        map.put('L',new int[] {-1,0});
+    //2. 좌표 동작을 미리 저장해두는 direction <K,V>
+    private static final HashMap<Character,int[]> direction = new HashMap<>();
+    //3. 좌표를 미리 넣는 메서드 
+    private static void initDirection(){
+        direction.put('U',new int[] {0,1});
+        direction.put('D', new int[] {0,-1});
+        direction.put('R',new int[] {1,0});
+        direction.put('L', new int[] {-1,0});
     }
     
-    //3. 솔루션
     public int solution(String dirs) {
-        initMap();
-        HashSet<String> result = new HashSet<>();
-        int answer = 0;
+        initDirection(); //direction에 좌표 넣기 
+        // x,y 좌표 5,5로 변경 
         int x = 5;
-        int y = 5;
+        int y = 5; 
+        //중복되지 않도록 set의 형태로 이동 경로 저장
+        HashSet<String> result = new HashSet<>();
+        //4. 반복문을 통해서 dirs의 char을 하나씩 꺼내서 nx, ny를 계산
         for(int i=0;i<dirs.length();i++){
-            int nx = x + map.get(dirs.charAt(i))[0];
-            int ny = y + map.get(dirs.charAt(i))[1];
+            //계산된 이동 경로를 왕복으로 result에 추가하기
+            //이때 중복방지를 위해서 HashSet으로 관리 
+            //음수 좌표를 제거하기 위해서 0,0 -> 5,5로 이동 
+            
+            
+            int[] offset = direction.get(dirs.charAt(i));
+            int nx = x + offset[0];
+            int ny = y + offset[1];
             
             if(!isValid(nx,ny)){
                 continue;
             }
             
-            result.add(x+" "+y+" "+nx+" "+ny+" ");
-            result.add(nx+" "+ny+" "+x+" "+y+" ");
+            result.add(x+" "+y+" "+nx+" "+ny);
+            result.add(nx+" "+ny+" "+x+" "+y);
             
             x = nx;
             y = ny;
         }
+        return result.size() / 2;
         
-        return answer = result.size() / 2;
         
-        
-        //4. dirs를 하나씩 열어보면서 nx와 ny를 구하기 
-        
-        //5. 길 = 시작 -> 끝 이므로 x y -> nx ny를 저장하고 반대도 저장 
-        
-        //6. 저장된 set 타입은 중복이 없으므로 length/2가 정답이다. 
     }
 }
