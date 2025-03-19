@@ -12,14 +12,11 @@ class Solution {
             if(c=='('){
                 stack.push(c);
             }else{ //닫는괄호가 나온경우
-                if(stack.isEmpty() || stack.pop() == c){
+                if(stack.isEmpty() || stack.pop() == '('){
                     return false;
                 }
             }
         }
-        if(stack.isEmpty()){
-            return true;
-        }
-		return false;
+			return true;
     }
 }
