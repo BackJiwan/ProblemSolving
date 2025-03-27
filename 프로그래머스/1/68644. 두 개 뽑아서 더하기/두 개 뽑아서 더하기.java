@@ -1,30 +1,25 @@
 /*
-1. numbers의 길이는 최대 100
-2. 2중 반복문을 통해서 두개의 수를 골라서 set에 저장 
-3. sorted를 이용해서 정렬하는데에 NLog(N)의 복잡도가 소요 
-4. 여기에서 N은 전체 데이터의 개수인데 N < 100^2 이므로
-5. 복잡도는 100^2*log(100^2)이하이다. 
+1. 100개 있으니까 그냥 전부다 i랑 j로 순회하면서 ^2 으로 봐도됨
+2. 다만 중복을 허용하지 않도록 Set에 담아서 관리하면 될듯
 */
-
-/*
-1. 2중 반복문을 통해서 numbers의 왼쪽,오른쪽 쌍을 통해서 가능한 모든 쌍을 고른다.
-2. 골랐을 때마다 HashSet에 넣어서 중복없이 모든 합을 저장한다. 
-3. 저장 이후 정렬을 하고 int[] 의 형태로 리턴.
-*/
-
 import java.util.HashSet;
-
 class Solution {
     public int[] solution(int[] numbers) {
         int[] answer = {};
-        HashSet<Integer> set = new HashSet<Integer>();
-        for(int i=0;i<numbers.length-1;i++){
-            for(int j=i+1;j<numbers.length;j++){
-                set.add(numbers[i] + numbers[j]);
+        int n = numbers.length;
+        
+        HashSet<Integer> set = new HashSet<>();
+        for(int i=0;i<n-1;i++){//왼쪽
+            for(int j=i+1;j<n;j++){//오른쪽 
+                int sum = numbers[i] + numbers[j];
+                set.add(sum);
             }
         }
         
+        //set을 오름차순으로 정렬하고 다시 int[] 로 만들어야 한다. 
         
+        // HashSet<Integer> -> 스트림을 만들까...?
         return set.stream().sorted().mapToInt(Integer::intValue).toArray();
+
     }
 }
