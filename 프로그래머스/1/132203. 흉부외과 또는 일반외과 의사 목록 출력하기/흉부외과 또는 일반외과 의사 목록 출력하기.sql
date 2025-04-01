@@ -1,4 +1,5 @@
 -- 코드를 입력하세요
+-- 코드를 입력하세요
 SELECT
     DR_NAME,
     DR_ID,
@@ -7,7 +8,7 @@ SELECT
 FROM 
     DOCTOR
 WHERE
-    MCDP_CD IN ("CS","GS")
+    MCDP_CD = "CS" OR MCDP_CD = "GS"
 ORDER BY
     HIRE_YMD DESC,
     DR_NAME ASC;
