@@ -1,6 +1,8 @@
 -- 코드를 입력하세요
+-- 대여시작일을 기준으로 8,9,10 월에 대해서만 
+-- Month를 (Month함수로 먼저 가져오기 )
 WITH RENTAL_FILTERED AS (
-    SELECT 
+    SELECT
         CAR_ID,
         MONTH(START_DATE) AS MONTH
     FROM
